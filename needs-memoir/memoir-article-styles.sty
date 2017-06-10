@@ -111,4 +111,18 @@
 \makeevenfoot{kjhgit}{}{\scshape\thepage}{}
 \makeoddfoot{kjhgit}{}{\scshape\thepage}{}
 \makeevenhead{kjhgit}{}{\texttt{\footnotesize \VCRevision\ by \VCAuthor\ on \VCDateISO at \VCTime}}{}
-\makeoddhead{kjhgit}{}{\texttt{\footnotesize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}{}      
+\makeoddhead{kjhgit}{}{\texttt{\footnotesize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}{}     
+
+
+%
+% Git info for CV; requires vc package 
+%
+
+% Make the style for vc-git revision control headers and footers
+\makepagestyle{kjhgit-cv}
+% \makeheadrule{kjhgit}{\textwidth}{\normalrulethickness}
+\aliaspagestyle{title}{kjhgit}
+%\makeevenfoot{kjhgit-cv}{}{\scshape\thepage}{}
+%\makeoddfoot{kjhgit-cv}{}{\scshape\thepage}{}
+\makeevenfoot{kjhgit-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}
+\makeoddfoot{kjhgit-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}  
