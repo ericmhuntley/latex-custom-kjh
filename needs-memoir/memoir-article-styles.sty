@@ -53,7 +53,20 @@
 
 % insert date of last github commit before title
 \date{\vspace{-9ex}}
-\renewcommand{\maketitlehooka}{\begin{flushright}\normalsize\sffamily\printdate{\VCDateISO}\end{flushright}}
+\renewcommand{\maketitlehooka}{\begin{flushright}
+  \normalsize
+  \sffamily
+  \IfFileExists{./vc.tex}{
+    \printdate{\VCDateISO}
+  }{
+    $if(date)$
+      \normalsize\printdate{$date$}
+    $else$
+      \normalsize\printdate{\today}
+    $endif$
+  }
+  \end{flushright}
+}
 
 % Title flush left
 \pretitle{\par\vskip 3em
@@ -112,7 +125,11 @@
 % \aliaspagestyle{title}{git}
 \makeevenfoot{git}{}{\sffamily\thepage}{}
 \makeoddfoot{git}{}{\sffamily\thepage}{}
-\makeevenhead{git}{\texttt{\textcolor{red}{\scriptesize Draft. Contact prior to citing.}}}{}{\texttt{\scriptsize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}
+\makeevenhead{git}{\texttt{\textcolor{red}{\scriptesize Draft. Contact prior to citing.}}}{}{
+  \IfFileExists{./vc.tex}{
+    \texttt{\scriptsize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}
+  }{}
+}
 \makeoddhead{git}{\texttt{\textcolor{red}{\scriptsize Draft. Contact prior to citing.}}}{}{\texttt{\scriptsize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}
 
 %
