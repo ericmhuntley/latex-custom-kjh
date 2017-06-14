@@ -1,5 +1,5 @@
 %%% Some article styles and page layout tweaks for the memoir class
-%%% Choose these as article or pagestyles for your memoir document. 
+%%% Choose these as article or pagestyles for your memoir document.
 %%% @kjhealy, modified by @ericmhuntley
 
 
@@ -7,13 +7,13 @@
 % Some useful bits and pieces
 % --------------------------------------------------
 % Blank footnote command.
-% Use \symbolfootnote[0]{Footnote text} for a blank footnote. 
+% Use \symbolfootnote[0]{Footnote text} for a blank footnote.
 % Useful for an initial acknowledgment note.
 \long\def\symbolfootnote[#1]#2{\begingroup%
 \def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
 
 % Redefine \and and \andnext to remove tabular environment.
-% Needed below for custom article-styles when multiple authors are present. 
+% Needed below for custom article-styles when multiple authors are present.
 \renewcommand{\and}{\, }
 \renewcommand*{\andnext}{%
   \\\medskip }
@@ -22,62 +22,64 @@
 \def\mybibind{\hangindent=1 true cm\hangafter=1 \noindent}
 
 % --------------------------------------------------
-% Style: article 
+% Style: article
 % --------------------------------------------------
 
 % Make the style for Chapters and sections
-   \makechapterstyle{article}{
-    \setsecheadstyle{\Large\scshape\MakeLowercase} 
-    \setsubsecheadstyle{\normalsize\itshape} 
-	\setaftersubsubsecskip{-1em}
-    \setsubsubsecheadstyle{\small\bfseries}
-    \renewcommand{\printchaptername}{} 
-    \renewcommand{\chapternamenum}{} 
-    \renewcommand{\chapnumfont}{\chaptitlefont} 
-    \renewcommand{\printchapternum}{\chapnumfont \thechapter\space} 
-    \renewcommand{\afterchapternum}{} 
-    \renewcommand{\printchaptername}{\secheadstyle}
-    \renewcommand{\cftchapterfont}{\normalfont} 
-    \renewcommand{\cftchapterpagefont}{\normalfont\scshape} 
-    \renewcommand{\cftchapterpresnum}{\scshape} 
-    %\renewcommand{\cftchapterleader}{} 
-    %\renewcommand{\cftchapterafterpnum}{\cftparfillskip}
-    \captiontitlefont{\small}
-    %\settocdepth{chapter}
-    \maxsecnumdepth{chapter} 
-    \setsecnumdepth{chapter}
+\makechapterstyle{article-1}{
+\def\thesection{\arabic{section}}
+\setsecheadstyle{\normalsize\sffamily}
+\setsubsecheadstyle{\normalsize\sffamily\itshape}
+\setaftersubsubsecskip{-1em}
+\setsubsubsecheadstyle{\small\bfseries}
+\renewcommand{\printchaptername}{}
+\renewcommand{\chapternamenum}{}
+\renewcommand{\chapnumfont}{\chaptitlefont}
+\renewcommand{\printchapternum}{\chapnumfont \thechapter\space}
+\renewcommand{\afterchapternum}{}
+\renewcommand{\printchaptername}{\secheadstyle}
+\renewcommand{\cftchapterfont}{\normalfont}
+\renewcommand{\cftchapterpagefont}{\normalfont\scshape}
+\renewcommand{\cftchapterpresnum}{\scshape}
+% \renewcommand{\cftchapterleader}{}
+% \renewcommand{\cftchapterafterpnum}{\cftparfillskip}
+\captiontitlefont{\small}
+% \settocdepth{chapter}
+% \maxsecnumdepth{chapter}
+% \setsecnumdepth{chapter}
 
-    % reduce skip after section heading
-    \setaftersecskip{1.7ex}
+% reduce skip after section heading
+\setaftersecskip{1.7ex}
 
-    % insert date of last github commit before title
-    \renewcommand{\maketitlehooka}{\begin{flushleft}\normalsize\printdate{\VCDateISO}\end{flushleft}}
+% insert date of last github commit before title
+\date{\vspace{-9ex}}
+\renewcommand{\maketitlehooka}{\begin{flushright}\normalsize\sffamily\printdate{\VCDateISO}\end{flushright}}
 
-    % Title flush left
-    \pretitle{\par\vskip 3em 
-        \begin{flushleft}\LARGE\bfseries}
-    \posttitle{\end{flushleft}\par\vskip 0.5em}
-    \preauthor{\begin{flushleft}\normalsize\bigskip}
-    \postauthor{\end{flushleft}}
-    %% \predate{\begin{flushleft}\normalsize}
-    %% \postdate{\end{flushleft}}
+% Title flush left
+\pretitle{\par\vskip 3em
+    \begin{flushleft}\LARGE\bfseries\MakeUppercase}
+\posttitle{\end{flushleft}\vskip 0.5em}
+\preauthor{\begin{flushleft}\normalsize\bigskip}
+\postauthor{\end{flushleft}}
+% \preauthor{\begin{flushleft}\normalsize\bigskip}
+% \postauthor{\end{flushleft}}
+%% \predate{\begin{flushleft}\normalsize}
+%% \postdate{\end{flushleft}}
 
-    % 'abstract' bigger skip from title
-    \addto\captionsamerican{\renewcommand{\abstractname}{}}
-    \renewcommand{\abstractname}{}
-    \renewcommand{\abstracttextfont}{\normalfont\scriptsize}
-    \abstractrunin
-   }
+% 'abstract' bigger skip from title
+\renewcommand{\abstracttextfont}{\normalfont\footnotesize}
+\abstractrunin
+}
 
 
-% -------------------------------------------------- 
+% --------------------------------------------------
 % Custom styles for headers and footers The chapterstyles above
 % style sections/subsections and titles, etc. These pagestyles
 % control the running headers and footers.
 % --------------------------------------------------
-   
-% Basic 
-\makepagestyle{kjh}
+
+% Basic
+\makepagestyle{basic}
 %\makeevenfoot{kjh}{\thepage}{}{}
 %\makeoddfoot{kjh}{}{}{\thepage}
 %\makeheadrule{kjh}{\textwidth}{\normalrulethickness}
@@ -94,35 +96,34 @@
   \def\sectionmark##1{%
     \markright{##1}}
 }
-\makepsmarks{kjh}{\@kjhmarks}
-\makepsmarks{kjh}{}
-\makeevenhead{kjh}{}{}{\scshape\thepage}
-\makeoddhead{kjh}{}{}{\scshape\thepage}
-
-
-%
-% Git info in footers; requires vc package 
-%
-
-% Make the style for vc-git revision control headers and footers
-\makepagestyle{kjhgit}
-% \makeheadrule{kjhgit}{\textwidth}{\normalrulethickness}
-\aliaspagestyle{title}{kjhgit}
-\makeevenfoot{kjhgit}{}{\scshape\thepage}{}
-\makeoddfoot{kjhgit}{}{\scshape\thepage}{}
-\makeevenhead{kjhgit}{}{\texttt{\footnotesize \VCRevision\ by \VCAuthor\ on \VCDateISO at \VCTime}}{}
-\makeoddhead{kjhgit}{}{\texttt{\footnotesize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}{}     
-
+\makepsmarks{basic}{\@kjhmarks}
+\makepsmarks{basic}{}
+\makeevenhead{basic}{}{}{}
+\makeoddhead{basic}{}{}{}
+\makeevenfoot{basic}{}{\scshape\thepage}{}
+\makeoddfoot{basic}{}{\scshape\thepage}{}
 
 %
-% Git info for CV; requires vc package 
+% Git info in footers; requires vc package
 %
 
 % Make the style for vc-git revision control headers and footers
-\makepagestyle{kjhgit-cv}
-% \makeheadrule{kjhgit}{\textwidth}{\normalrulethickness}
-\aliaspagestyle{title}{kjhgit}
-%\makeevenfoot{kjhgit-cv}{}{\scshape\thepage}{}
-%\makeoddfoot{kjhgit-cv}{}{\scshape\thepage}{}
-\makeevenfoot{kjhgit-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}
-\makeoddfoot{kjhgit-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}  
+\makepagestyle{git}
+% \aliaspagestyle{title}{git}
+\makeevenfoot{git}{}{\sffamily\thepage}{}
+\makeoddfoot{git}{}{\sffamily\thepage}{}
+\makeevenhead{git}{\texttt{\textcolor{red}{\scriptesize Draft. Contact prior to citing.}}}{}{\texttt{\scriptsize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}
+\makeoddhead{git}{\texttt{\textcolor{red}{\scriptsize Draft. Contact prior to citing.}}}{}{\texttt{\scriptsize \VCRevision\ by \VCAuthor\ on \VCDateISO\ at \VCTime}}
+
+%
+% Git info for CV; requires vc package
+%
+
+% % Make the style for vc-git revision control headers and footers
+% \makepagestyle{git-cv}
+% % \makeheadrule{kjhgit}{\textwidth}{\normalrulethickness}
+% \aliaspagestyle{title}{git}
+% %\makeevenfoot{kjhgit-cv}{}{\scshape\thepage}{}
+% %\makeoddfoot{kjhgit-cv}{}{\scshape\thepage}{}
+% \makeevenfoot{git-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}
+% \makeoddfoot{git-cv}{\emph{\footnotesize Last updated on \printdate{\VCDateISO}.}}{}{\scshape\thepage}
